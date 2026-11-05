@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ENCRE NOCTURNE — Premium tattoo studio. More than a tattoo." />
+  <title>ENCRE NOCTURNE</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <!-- Brand -->
+      <a href="#" class="navbar__brand" aria-label="ENCRE NOCTURNE home">
+        ENCRE NOCTURNE
+      </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbar-menu">
+        <span class="navbar__toggle-bar"></span>
+        <span class="navbar__toggle-bar"></span>
+        <span class="navbar__toggle-bar"></span>
+      </button>
+
+      <!-- Nav links -->
+      <ul class="navbar__menu" id="navbar-menu" role="list">
+        <li class="navbar__item">
+          <a href="#categories" class="navbar__link">EXPLORE</a>
+        </li>
+        <li class="navbar__item">
+          <a href="#" class="navbar__link js-open-booking" role="button" aria-haspopup="dialog">BOOK</a>
+        </li>
+        <li class="navbar__item">
+          <a href="#about" class="navbar__link">ABOUT</a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="hero" aria-labelledby="hero-title">
+
+      <!-- Headline — split into two lines per design revision -->
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__title-line">ENCRE</span>
+        <span class="hero__title-line">NOCTURNE</span>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="hero__tagline">MORE THAN A TATTOO.</p>
+
+      <!-- Hand Image Container — interactive reveal -->
+      <div class="hero__hands" id="handsContainer" aria-hidden="true">
+
+        <!-- Base: clean hand (always visible) -->
+        <img
+          src="assets/images/Hand-1.png"
+          alt="Clean hand"
+          class="hero__hand hero__hand--clean"
+          draggable="false"
+        />
+
+        <!-- Overlay: tattooed hand (revealed under cursor) -->
+        <img
+          src="assets/images/Hand-2.png"
+          alt="Tattooed hand"
+          class="hero__hand hero__hand--tattoo"
+          draggable="false"
+        />
+
+      </div>
+
+      <!-- Explore Button -->
+      <div class="hero__explore-wrap">
+        <a href="#categories" class="hero__explore" aria-label="Explore tattoo categories">
+          EXPLORE
+        </a>
+      </div>
+
+      <!-- Statistics -->
+      <div class="hero__stats" aria-label="Studio statistics">
+
+        <div class="hero__stat">
+          <span class="hero__stat-number">08+</span>
+          <span class="hero__stat-label">Years of Experience</span>
+        </div>
+
+        <div class="hero__stat-divider" aria-hidden="true"></div>
+
+        <div class="hero__stat">
+          <span class="hero__stat-number">1,200+</span>
+          <span class="hero__stat-label">Tattoo Works</span>
+        </div>
+
+        <div class="hero__stat-divider" aria-hidden="true"></div>
+
+        <div class="hero__stat">
+          <span class="hero__stat-number">06</span>
+          <span class="hero__stat-label">Artistic Styles</span>
+        </div>
+
+        <div class="hero__stat-divider" aria-hidden="true"></div>
+
+        <div class="hero__stat">
+          <span class="hero__stat-number">100%</span>
+          <span class="hero__stat-label">Made for You</span>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /HERO SECTION -->
+
+    <!-- ===================== BOOK / TATTOO CATALOG ===================== -->
+    <!-- #categories anchor: EXPLORE nav link lands here (top of cards) -->
+    <div id="categories" aria-hidden="true"></div>
+
+    <section id="book" class="catalog" aria-labelledby="catalog-heading">
+
+      <!-- ── CATEGORY CARDS ─────────────────────────────────── -->
+      <div class="catalog__cards" role="list" aria-label="Tattoo categories">
+
+        <!-- Card 1: Minimalist -->
+        <article class="catalog__card" role="listitem" tabindex="0" aria-label="Minimalist tattoo style">
+          <img
+            src="assets/images/cat-1.jpg"
+            alt="Minimalist tattoo style — quiet lines and refined forms"
+            class="catalog__card-img"
+            draggable="false"
+          />
+          <div class="catalog__card-overlay" aria-hidden="true"></div>
+          <div class="catalog__card-text">
+            <h2 class="catalog__card-title">MINIMALIST</h2>
+            <p class="catalog__card-desc">QUIET LINES AND REFINED FORMS, CREATED WITH AN UNDERSTATED ELEGANCE.</p>
+          </div>
+        </article>
+
+        <!-- Card 2: Traditional -->
+        <article class="catalog__card" role="listitem" tabindex="0" aria-label="Traditional tattoo style">
+          <img
+            src="assets/images/cat-2.jpg"
+            alt="Traditional tattoo style — bold symbols and timeless compositions"
+            class="catalog__card-img"
+            draggable="false"
+          />
+          <div class="catalog__card-overlay" aria-hidden="true"></div>
+          <div class="catalog__card-text">
+            <h2 class="catalog__card-title">TRADITIONAL</h2>
+            <p class="catalog__card-desc">BOLD SYMBOLS AND TIMELESS COMPOSITIONS INSPIRED BY CLASSIC TATTOO ARTISTRY.</p>
+          </div>
+        </article>
+
+        <!-- Card 3: Japanese -->
+        <article class="catalog__card" role="listitem" tabindex="0" aria-label="Japanese tattoo style">
+          <img
+            src="assets/images/cat-3.jpg"
+            alt="Japanese tattoo style — rich symbolism and flowing compositions"
+            class="catalog__card-img"
+            draggable="false"
+          />
+          <div class="catalog__card-overlay" aria-hidden="true"></div>
+          <div class="catalog__card-text">
+            <h2 class="catalog__card-title">JAPANESE</h2>
+            <p class="catalog__card-desc">RICH SYMBOLISM AND FLOWING COMPOSITIONS SHAPED BY JAPANESE TRADITION.</p>
+          </div>
+        </article>
+
+        <!-- Card 4: Blackwork -->
+        <article class="catalog__card" role="listitem" tabindex="0" aria-label="Blackwork tattoo style">
+          <img
+            src="assets/images/cat-4.jpg"
+            alt="Blackwork tattoo style — striking contrast and solid geometry"
+            class="catalog__card-img"
+            draggable="false"
+          />
+          <div class="catalog__card-overlay" aria-hidden="true"></div>
+          <div class="catalog__card-text">
+            <h2 class="catalog__card-title">BLACKWORK</h2>
+            <p class="catalog__card-desc">STRIKING CONTRAST AND SOLID GEOMETRY FOR A BOLD, UNCOMPROMISING EXPRESSION.</p>
+          </div>
+        </article>
+
+        <!-- Card 5: Fine Line -->
+        <article class="catalog__card" role="listitem" tabindex="0" aria-label="Fine line tattoo style">
+          <img
+            src="assets/images/cat-5.jpg"
+            alt="Fine line tattoo style — delicate strokes and intricate details"
+            class="catalog__card-img"
+            draggable="false"
+          />
+          <div class="catalog__card-overlay" aria-hidden="true"></div>
+          <div class="catalog__card-text">
+            <h2 class="catalog__card-title">FINE LINE</h2>
+            <p class="catalog__card-desc">DELICATE STROKES AND INTRICATE DETAILS, DRAWN WITH PRECISION AND RESTRAINT.</p>
+          </div>
+        </article>
+
+      </div>
+      <!-- /CATEGORY CARDS -->
+
+      <!-- ── BELOW CARDS: SIZING + BOOKING ─────────────────── -->
+      <div class="catalog__bottom">
+
+        <h3 class="catalog__bottom-heading" id="catalog-heading">MADE TO FIT YOU.</h3>
+
+        <p class="catalog__bottom-desc">
+          EVERY DESIGN IS CONSIDERED IN PROPORTION TO YOUR BODY, YOUR IDEA, AND THE STORY YOU WISH TO CARRY.
+          CHOOSE THE SCALE THAT BEST EXPRESSES YOUR INTENTION.
+        </p>
+
+        <!-- Size options removed — size selection lives inside the booking modal -->
+
+        <!-- Book Now CTA -->
+        <button class="catalog__book-btn js-open-booking" aria-haspopup="dialog" aria-label="Book a tattoo session now">
+          BOOK NOW
+        </button>
+
+      </div>
+      <!-- /BELOW CARDS -->
+
+    </section>
+    <!-- /BOOK / TATTOO CATALOG -->
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="about" aria-labelledby="about-heading">
+
+      <!-- ── JUMBOTRON ──────────────────────────────────────── -->
+      <div class="about__jumbotron" role="img" aria-label="Encre Nocturne studio interior">
+        <!-- Subtle dark overlay for text legibility -->
+        <div class="about__jumbotron-overlay" aria-hidden="true"></div>
+
+        <div class="about__jumbotron-content">
+          <p class="about__jumbotron-label">ABOUT</p>
+          <h2 class="about__jumbotron-title" id="about-heading">ENCRE NOCTURNE<br><span class="about__jumbotron-subtitle">TATTOO STUDIO</span></h2>
+          <p class="about__jumbotron-tagline">
+            QUIET LINES AND REFINED FORMS, CREATED WITH AN UNDERSTATED ELEGANCE.
+          </p>
+        </div>
+      </div>
+      <!-- /JUMBOTRON -->
+
+      <!-- ── DESCRIPTION ────────────────────────────────────── -->
+      <div class="about__body">
+
+        <p class="about__desc">
+          ENCRE NOCTURNE IS A CONTEMPORARY TATTOO STUDIO WHERE ART, IDENTITY,
+          AND CRAFTSMANSHIP COME TOGETHER. EVERY PIECE IS CAREFULLY DESIGNED TO
+          REFLECT THE PERSON BEHIND IT — MADE WITH PRECISION, INTENTION, AND
+          CHARACTER.
+        </p>
+
+        <!-- ── LOCATION ─────────────────────────────────────── -->
+        <div class="about__location">
+          <p class="about__location-label">VISIT OUR STUDIO</p>
+          <p class="about__location-city">YOGYAKARTA, INDONESIA</p>
+        </div>
+
+        <!-- ── CTA BAR ──────────────────────────────────────── -->
+        <div class="about__cta-bar" role="group" aria-label="Contact actions">
+
+          <!-- CONTACT ME -->
+          <button
+            class="about__cta-item js-about-contact"
+            aria-label="Contact Encre Nocturne"
+          >
+            CONTACT ME
+          </button>
+
+          <span class="about__cta-divider" aria-hidden="true"></span>
+
+          <!-- SEND AN INQUIRY — opens booking modal -->
+          <button
+            class="about__cta-item js-open-booking"
+            aria-haspopup="dialog"
+            aria-label="Send a booking inquiry"
+          >
+            SEND AN INQUIRY
+          </button>
+
+          <span class="about__cta-divider" aria-hidden="true"></span>
+
+          <!-- LEAVE A REVIEW — placeholder -->
+          <button
+            class="about__cta-item js-about-review"
+            aria-label="Leave a review"
+          >
+            LEAVE A REVIEW
+          </button>
+
+        </div>
+        <!-- /CTA BAR -->
+
+      </div>
+      <!-- /BODY -->
+
+    </section>
+    <!-- /ABOUT -->
+
+  </main>
+
+  <!-- ===================== BOOKING MODAL ===================== -->
+  <div
+    id="bookingModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="bookingModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal__backdrop js-close-booking" tabindex="-1" aria-hidden="true"></div>
+
+    <div class="modal__panel" role="document">
+
+      <!-- Close button -->
+      <button class="modal__close js-close-booking" aria-label="Close booking form">&#x2715;</button>
+
+      <!-- Header -->
+      <div class="modal__header">
+        <p class="modal__label">ENCRE NOCTURNE</p>
+        <h2 class="modal__title" id="bookingModalTitle">BOOK YOUR SESSION</h2>
+      </div>
+
+      <form id="bookingForm" class="modal__form" novalidate>
+
+        <!-- ── PERSONAL INFORMATION ─────────────────────── -->
+        <fieldset class="modal__section">
+          <legend class="modal__section-title">PERSONAL INFORMATION</legend>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="fullName">Full Name <span aria-hidden="true">*</span></label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              class="modal__input"
+              placeholder="Your full name"
+              required
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="phone">Phone / WhatsApp <span aria-hidden="true">*</span></label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              class="modal__input"
+              placeholder="+62 812 3456 7890"
+              required
+              autocomplete="tel"
+            />
+          </div>
+        </fieldset>
+
+        <!-- ── TATTOO DETAILS ───────────────────────────── -->
+        <fieldset class="modal__section">
+          <legend class="modal__section-title">TATTOO DETAILS</legend>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="tattooStyle">Tattoo Style <span aria-hidden="true">*</span></label>
+            <div class="modal__select-wrap">
+              <select id="tattooStyle" name="tattooStyle" class="modal__select" required>
+                <option value="" disabled selected>Select a style</option>
+                <option value="minimalist">Minimalist</option>
+                <option value="traditional">Traditional</option>
+                <option value="japanese">Japanese</option>
+                <option value="blackwork">Blackwork</option>
+                <option value="fine-line">Fine Line</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="placement">Tattoo Placement <span aria-hidden="true">*</span></label>
+            <input
+              id="placement"
+              name="placement"
+              type="text"
+              class="modal__input"
+              placeholder="e.g. Inner forearm, shoulder blade"
+              required
+            />
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" id="sizeLabel">Tattoo Size <span aria-hidden="true">*</span></label>
+            <div class="modal__size-group" role="group" aria-labelledby="sizeLabel">
+              <label class="modal__size-option">
+                <input type="radio" name="tattooSize" value="small" required />
+                <span class="modal__size-pill">SMALL</span>
+              </label>
+              <label class="modal__size-option">
+                <input type="radio" name="tattooSize" value="medium" />
+                <span class="modal__size-pill">MEDIUM</span>
+              </label>
+              <label class="modal__size-option">
+                <input type="radio" name="tattooSize" value="large" />
+                <span class="modal__size-pill">LARGE</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="tattooDesc">Tattoo Description <span aria-hidden="true">*</span></label>
+            <textarea
+              id="tattooDesc"
+              name="tattooDesc"
+              class="modal__textarea"
+              placeholder="Describe your tattoo idea, motifs, style references…"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <!-- ── APPOINTMENT ──────────────────────────────── -->
+        <fieldset class="modal__section">
+          <legend class="modal__section-title">APPOINTMENT</legend>
+
+          <div class="modal__row">
+            <div class="modal__field">
+              <label class="modal__field-label" for="prefDate">Preferred Date <span aria-hidden="true">*</span></label>
+              <input
+                id="prefDate"
+                name="prefDate"
+                type="date"
+                class="modal__input"
+                required
+              />
+            </div>
+
+            <div class="modal__field">
+              <label class="modal__field-label" for="prefTime">Preferred Time <span aria-hidden="true">*</span></label>
+              <input
+                id="prefTime"
+                name="prefTime"
+                type="time"
+                class="modal__input"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" id="apptTypeLabel">Appointment Type <span aria-hidden="true">*</span></label>
+            <div class="modal__size-group" role="group" aria-labelledby="apptTypeLabel">
+              <label class="modal__size-option">
+                <input type="radio" name="apptType" value="consultation" required />
+                <span class="modal__size-pill">CONSULTATION</span>
+              </label>
+              <label class="modal__size-option">
+                <input type="radio" name="apptType" value="session" />
+                <span class="modal__size-pill">TATTOO SESSION</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ── REFERENCE ────────────────────────────────── -->
+        <fieldset class="modal__section">
+          <legend class="modal__section-title">REFERENCE</legend>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="refImage">Upload Reference Image <span class="modal__optional">(optional)</span></label>
+            <label class="modal__file-label" for="refImage">
+              <span class="modal__file-icon" aria-hidden="true">&#x2b;&#x20;</span>
+              <span class="modal__file-text" id="fileText">Choose file or drag &amp; drop</span>
+              <input
+                id="refImage"
+                name="refImage"
+                type="file"
+                class="modal__file-input"
+                accept="image/*"
+                aria-describedby="fileText"
+              />
+            </label>
+          </div>
+
+          <div class="modal__field">
+            <label class="modal__field-label" for="notes">Additional Notes <span class="modal__optional">(optional)</span></label>
+            <textarea
+              id="notes"
+              name="notes"
+              class="modal__textarea"
+              placeholder="Any other details you'd like us to know…"
+              rows="2"
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <!-- ── CONFIRMATION ─────────────────────────────── -->
+        <div class="modal__confirm">
+          <label class="modal__checkbox-label">
+            <input
+              type="checkbox"
+              id="confirmCheck"
+              name="confirmCheck"
+              class="modal__checkbox"
+              required
+            />
+            <span class="modal__checkbox-custom" aria-hidden="true"></span>
+            <span class="modal__checkbox-text">
+              I confirm that the information provided is correct and I agree to be contacted regarding my booking.
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="modal__submit">BOOK APPOINTMENT</button>
+
+      </form>
+    </div>
+  </div>
+  <!-- /BOOKING MODAL -->
+
+  <!-- ===================== SUCCESS MODAL ===================== -->
+  <div
+    id="successModal"
+    class="modal modal--success"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="successModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal__backdrop js-close-success" tabindex="-1" aria-hidden="true"></div>
+
+    <div class="modal__panel modal__panel--success" role="document">
+      <button class="modal__close js-close-success" aria-label="Close confirmation">&#x2715;</button>
+
+      <div class="success__icon" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="24" cy="24" r="23" stroke="#000" stroke-width="1.5"/>
+          <path d="M14 24.5L20.5 31L34 17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h2 class="success__heading" id="successModalTitle">BOOKING RECEIVED.</h2>
+      <p class="success__sub">Thank you for choosing Encre Nocturne.</p>
+      <p class="success__body">
+        Your appointment request has been received. Our team will confirm your booking via WhatsApp shortly.
+      </p>
+
+      <button class="modal__submit success__close-btn js-close-success">CLOSE</button>
+    </div>
+  </div>
+  <!-- /SUCCESS MODAL -->
+
+  <script src="js/script.js"></script>
+</body>
+</html>

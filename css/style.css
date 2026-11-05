@@ -1,0 +1,1913 @@
+/* ============================================================
+   ENCRE NOCTURNE — style.css
+   Desktop-first, based on Figma 1440 × 1024
+   ============================================================ */
+
+/* ── CUSTOM FONTS ─────────────────────────────────────────── */
+@font-face {
+  font-family: 'Brigends Expanded';
+  src: url('../assets/fonts/BrigendsExpanded.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Coolvetica';
+  src: url('../assets/fonts/Coolvetica.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── CSS CUSTOM PROPERTIES ────────────────────────────────── */
+:root {
+  --color-bg:       #F5F6F8;
+  --color-black:    #000000;
+  --color-white:    #FFFFFF;
+
+  --font-headline:  'Brigends Expanded', serif;
+  --font-body:      'Coolvetica', sans-serif;
+
+  /* Hand reveal spotlight size — single source of truth */
+  --reveal-size:    180px;
+
+  /* Mouse position (updated via JS) */
+  --mouse-x:        -9999px;
+  --mouse-y:        -9999px;
+}
+
+/* ── RESET / BASE ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ============================================================
+   NAVBAR
+   Figma: height 78px, font-size 20px, Coolvetica
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 78px;
+  background-color: var(--color-bg);
+  z-index: 100;
+}
+
+.navbar__inner {
+  /* Figma: items span ~1440px canvas.
+     Brand at left ~0, links start at ~419px.
+     We replicate this with flex + gap matching Figma proportions. */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 100%;
+}
+
+/* Brand — Figma: width 249px, left -24px (bleeds slightly left) */
+.navbar__brand {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 78px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* Push links toward center, matching Figma proportions */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  /* Figma: EXPLORE starts at ~419px from left (~29% of 1440px).
+     We use margin-left auto + manual gap to centre the group. */
+  margin-left: auto;
+  gap: 60px;
+}
+
+.navbar__link {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 78px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s ease;
+}
+
+.navbar__link:hover {
+  opacity: 0.5;
+}
+
+/* Hamburger — hidden on desktop */
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  gap: 6px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.navbar__toggle-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-black);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger open state */
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: max(100vh, 960px);
+  overflow-x: hidden; /* only clip horizontal overflow; keep vertical visible */
+  padding-top: 78px; /* offset for fixed navbar */
+}
+
+/* ── HEADLINE ─────────────────────────────────────────────── */
+/* Two-line layout: ENCRE / NOCTURNE
+   Reduced from 100px → 76px so both lines fit width comfortably.
+   Line-height tight (0.88) to keep the two lines close together. */
+.hero__title {
+  position: relative;
+  z-index: 10;
+  font-family: var(--font-headline);
+  font-size: 76px;
+  font-weight: 400;
+  line-height: 0.88;
+  text-align: center;
+  color: var(--color-black);
+  letter-spacing: -0.01em;
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+/* Each line sits on its own row; display:block ensures the span breaks. */
+.hero__title-line {
+  display: block;
+}
+
+/* ── TAGLINE ──────────────────────────────────────────────── */
+/* Tighten vertical gap between headline and tagline. */
+.hero__tagline {
+  position: relative;
+  z-index: 10;
+  font-family: var(--font-body);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--color-black);
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
+/* ── HAND CONTAINER ───────────────────────────────────────── */
+/* Full-width: matches Figma 1440×810.
+   left: 0 so the left edge of the hand presses flush against the viewport edge.
+   No transform offset — both Hand-1 and Hand-2 share these exact values.
+   top: 160px puts it close to the tagline without a large gap. */
+.hero__hands {
+  position: absolute;
+  top: 160px;
+  left: 0;
+  transform: none;
+  width: 1440px;
+  height: 810px;
+}
+
+/* Both images: identical size, same position, stacked */
+.hero__hand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Hand-1: base clean hand — always fully visible */
+.hero__hand--clean {
+  z-index: 2;
+}
+
+/* Hand-2: tattooed hand — masked, only visible around cursor */
+.hero__hand--tattoo {
+  z-index: 3;
+
+  /* Radial reveal mask using cursor position.
+     --mouse-x/--mouse-y are set on the parent container by JS.
+     CSS custom properties cascade down so child elements inherit them. */
+  -webkit-mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--mouse-x) var(--mouse-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 35%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--mouse-x) var(--mouse-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 35%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* No cursor reveal on touch devices — just hide tattoo layer */
+@media (hover: none) {
+  .hero__hand--tattoo {
+    display: none;
+  }
+}
+
+/* ── EXPLORE BUTTON ───────────────────────────────────────── */
+/* Viewport 1440×1024: navbar=78px, usable=946px.
+   Hand: top=160px, height=810px, bottom=970px (bleeds below viewport).
+   Place button at 820px — overlaps hand with z-index 20 above it.
+   This keeps it well within the 946px usable area. */
+.hero__explore-wrap {
+  position: absolute;
+  top: 820px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+}
+
+.hero__explore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 38px;
+  background-color: var(--color-black);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--color-white);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero__explore:hover {
+  opacity: 0.8;
+  transform: scale(1.03);
+}
+
+.hero__explore:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 4px;
+}
+
+/* ── STATISTICS ───────────────────────────────────────────── */
+/* explore top(820) + height(38) + gap(14) = 872px
+   Stats height ~50px → bottom ~922px — inside 946px usable area. */
+.hero__stats {
+  position: absolute;
+  top: 872px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  padding: 0 28px;
+}
+
+.hero__stat-number {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--color-black);
+  display: block;
+  text-align: center;
+}
+
+.hero__stat-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-black);
+  display: block;
+  text-align: center;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+/* Vertical dividers between stats */
+.hero__stat-divider {
+  width: 2px;
+  height: 34px;
+  background-color: var(--color-black);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   PLACEHOLDER SECTIONS (future use)
+   ============================================================ */
+/* #about is now a real section — no placeholder rule needed */
+
+/* ============================================================
+   CATALOG — BOOK / TATTOO CATALOG SECTION
+   Figma reference: 1440 × 1024, cards 267 × 721, top 92px
+   ============================================================ */
+
+/* ── SECTION WRAPPER ──────────────────────────────────────── */
+.catalog {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-bg);
+  /* Top padding: accommodate 5 cards (height 721px) + bottom content.
+     Cards sit 92px below the section top (per Figma).
+     Bottom content gets its own padding. */
+  padding-top: 92px;
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+
+/* ── CARDS TRACK ──────────────────────────────────────────── */
+/* On desktop: pixel-perfect Figma layout with absolute-positioned cards
+   inside a fixed-height relative container.
+   On tablet/mobile: horizontal scroll track. */
+.catalog__cards {
+  position: relative;
+  /* Container height = card height so section height is driven by cards */
+  height: 721px;
+  /* Figma canvas: 1440px. Last card right edge = 1146 + 267 = 1413px.
+     Add 27px right gutter to match left 26px. Total min-width = 1440px. */
+  min-width: 1440px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ── INDIVIDUAL CARD ──────────────────────────────────────── */
+.catalog__card {
+  position: absolute;
+  top: 0;
+  width: 267px;
+  height: 721px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+
+  /* Smooth scale on hover — use transform so layout is never disrubed */
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Prevent focus outline from being clipped */
+  outline-offset: 3px;
+}
+
+/* Card positions per Figma spec */
+.catalog__card:nth-child(1) { left: 26px;   }
+.catalog__card:nth-child(2) { left: 306px;  }
+.catalog__card:nth-child(3) { left: 586px;  }
+.catalog__card:nth-child(4) { left: 866px;  }
+.catalog__card:nth-child(5) { left: 1146px; }
+
+/* Hover: scale card up, lift with shadow */
+.catalog__card:hover,
+.catalog__card:focus-visible {
+  transform: scale(1.04);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+  z-index: 10;
+}
+
+/* ── CARD IMAGE ───────────────────────────────────────────── */
+.catalog__card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Subtle zoom on hover via parent scale; add own transition for image pan */
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.catalog__card:hover .catalog__card-img,
+.catalog__card:focus-visible .catalog__card-img {
+  /* Very subtle additional zoom on the image itself */
+  transform: scale(1.035);
+}
+
+/* ── CARD GRADIENT OVERLAY ────────────────────────────────── */
+/* Black gradient rising from the bottom 235px of the card */
+.catalog__card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 235px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.70) 40%,
+    rgba(0, 0, 0, 0.20) 75%,
+    rgba(0, 0, 0, 0.00) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── CARD TEXT ────────────────────────────────────────────── */
+.catalog__card-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 16px 22px;
+  z-index: 3;
+  pointer-events: none;
+  text-align: center;
+}
+
+.catalog__card-title {
+  font-family: var(--font-headline);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-white);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.catalog__card-desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 17px;
+  color: var(--color-white);
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* ── BOTTOM CONTENT ───────────────────────────────────────── */
+.catalog__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* Gap between cards bottom and this content */
+  margin-top: 56px;
+  padding: 0 24px;
+}
+
+.catalog__bottom-heading {
+  font-family: var(--font-body);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--color-black);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.catalog__bottom-desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 17px;
+  color: var(--color-black);
+  text-align: center;
+  max-width: 633px;
+  opacity: 0.75;
+  margin-bottom: 36px;
+}
+
+/* ── BOOK NOW BUTTON ──────────────────────────────────────── */
+.catalog__book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 38px;
+  background-color: var(--color-black);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-white);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.catalog__book-btn:hover {
+  opacity: 0.80;
+  transform: scale(1.03);
+}
+
+.catalog__book-btn:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   RESPONSIVE — Laptop / Large desktop (≤ 1440px)
+   Scale all absolute-positioned elements proportionally.
+   Hand stays full viewport width, flush left.
+   ============================================================ */
+@media (max-width: 1440px) {
+  /* Hand: full viewport width, flush left, proportional height.
+     top scales from 160px reference. */
+  .hero__hands {
+    width: 100vw;
+    height: calc(100vw * (810 / 1440));
+    top: calc(100vw * (160 / 1440));
+    left: 0;
+    transform: none;
+  }
+
+  /* Explore: top scales from 820px reference */
+  .hero__explore-wrap {
+    top: calc(100vw * (820 / 1440));
+  }
+
+  /* Stats: top scales from 872px reference */
+  .hero__stats {
+    top: calc(100vw * (872 / 1440));
+  }
+
+  /* Title: scale font from 76px */
+  .hero__title {
+    font-size: clamp(42px, 5.278vw, 76px);
+    padding-top: clamp(14px, 1.389vw, 20px);
+  }
+
+  /* Tagline: scale font from 28px */
+  .hero__tagline {
+    font-size: clamp(16px, 1.944vw, 28px);
+    line-height: 1.3;
+    margin-top: clamp(4px, 0.556vw, 8px);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet (768px – 1199px)
+   ============================================================ */
+@media (max-width: 1199px) {
+
+  /* ── Navbar ── */
+  .navbar__inner {
+    padding: 0 28px;
+  }
+
+  .navbar__menu {
+    gap: 36px;
+  }
+
+  /* ── Hero ── */
+  .hero__title {
+    font-size: clamp(36px, 4.8vw, 60px);
+    padding-top: 16px;
+    line-height: 0.9;
+  }
+
+  .hero__tagline {
+    font-size: clamp(16px, 2vw, 24px);
+    line-height: 1.3;
+    margin-top: 6px;
+  }
+
+  .hero__stat {
+    padding: 0 18px;
+    min-width: 90px;
+  }
+
+  .hero__stat-number {
+    font-size: 20px;
+  }
+
+  .hero__stat-label {
+    font-size: 11px;
+  }
+
+  /* ── Catalog ── */
+  .catalog {
+    padding-top: 72px;
+    padding-bottom: 64px;
+    overflow: visible;
+  }
+
+  /* Cards track: switch to horizontal scroll */
+  .catalog__cards {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: auto;
+    min-width: unset;
+    max-width: unset;
+    width: 100%;
+    gap: 16px;
+    padding: 0 28px 16px;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .catalog__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cards: reset absolute positioning */
+  .catalog__card {
+    position: relative;
+    top: auto;
+    left: auto !important;
+    flex: 0 0 240px;
+    width: 240px;
+    height: 650px;
+  }
+
+  .catalog__bottom {
+    margin-top: 40px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (< 768px)
+   Switch to flow layout; remove absolute positioning.
+   ============================================================ */
+@media (max-width: 767px) {
+
+  /* ── Navbar mobile ── */
+  .navbar__inner {
+    padding: 0 20px;
+    position: relative;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__menu {
+    display: none;
+    position: absolute;
+    top: 78px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--color-bg);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 12px 0;
+    margin-left: 0;
+    z-index: 99;
+  }
+
+  .navbar__menu.is-open {
+    display: flex;
+  }
+
+  .navbar__item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar__link {
+    display: block;
+    padding: 12px 0;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  /* ── Hero mobile — switch to normal flow ── */
+  .hero {
+    min-height: auto;
+    padding-top: 78px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__title {
+    position: relative;
+    z-index: 10;
+    font-size: clamp(28px, 8vw, 50px);
+    line-height: 0.9;
+    padding-top: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-align: center;
+  }
+
+  .hero__title-line {
+    display: block;
+  }
+
+  .hero__tagline {
+    position: relative;
+    z-index: 10;
+    font-size: clamp(13px, 4vw, 20px);
+    line-height: 1.4;
+    margin-top: 8px;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .hero__hands {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: calc(100vw * (810 / 1440));
+    margin-top: 16px;
+    flex-shrink: 0;
+  }
+
+  .hero__hand--tattoo {
+    display: none;
+  }
+
+  .hero__explore-wrap {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__explore {
+    width: 160px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .hero__stats {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 16px;
+    margin-top: 32px;
+    margin-bottom: 40px;
+    padding: 0 24px;
+    white-space: normal;
+    width: 100%;
+  }
+
+  .hero__stat-divider {
+    display: none;
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .hero__stat {
+    padding: 0;
+    min-width: unset;
+  }
+
+  .hero__stat-number {
+    font-size: 22px;
+  }
+
+  .hero__stat-label {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+
+  /* ── Catalog mobile ── */
+  .catalog {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .catalog__cards {
+    gap: 12px;
+    padding: 0 20px 12px;
+  }
+
+  .catalog__card {
+    flex: 0 0 200px;
+    width: 200px;
+    height: 540px;
+  }
+
+  .catalog__card-title {
+    font-size: 13px;
+  }
+
+  .catalog__card-desc {
+    font-size: 13px;
+    line-height: 15px;
+  }
+
+  .catalog__bottom {
+    margin-top: 32px;
+    padding: 0 20px;
+  }
+
+  .catalog__bottom-heading {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .catalog__bottom-desc {
+    font-size: 14px;
+    line-height: 16px;
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .catalog__book-btn {
+    width: 170px;
+    height: 36px;
+    font-size: 21px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Small mobile (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+
+  /* ── Hero ── */
+  .hero__title {
+    font-size: clamp(26px, 8vw, 40px);
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero__tagline {
+    font-size: 13px;
+  }
+
+  .hero__explore {
+    width: 140px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .hero__stat-number {
+    font-size: 20px;
+  }
+
+  .hero__stat-label {
+    font-size: 11px;
+  }
+
+  .hero__stats {
+    gap: 20px 12px;
+    padding: 0 16px;
+  }
+
+  /* ── Catalog ── */
+  .catalog__cards {
+    padding: 0 16px 12px;
+    gap: 10px;
+  }
+
+  .catalog__card {
+    flex: 0 0 175px;
+    width: 175px;
+    height: 470px;
+  }
+
+  .catalog__bottom-heading {
+    font-size: 24px;
+  }
+}
+
+/* ============================================================
+   BOOKING MODAL & SUCCESS MODAL
+   ============================================================ */
+
+/* ── MODAL SHELL ──────────────────────────────────────────── */
+.modal {
+  /* Hidden by default; shown via .is-open on the element */
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Entry animation state */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── BACKDROP ─────────────────────────────────────────────── */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  /* No own transition — fades with parent .modal */
+}
+
+/* ── PANEL ────────────────────────────────────────────────── */
+.modal__panel {
+  position: relative;
+  z-index: 10;
+  background-color: var(--color-bg);
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 48px 48px 40px;
+  /* Scrollbar: thin and subtle */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.15) transparent;
+
+  /* Entry slide-up animation */
+  transform: translateY(24px);
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal__panel::-webkit-scrollbar {
+  width: 4px;
+}
+.modal__panel::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.15);
+  border-radius: 2px;
+}
+
+.modal.is-open .modal__panel {
+  transform: translateY(0);
+}
+
+/* ── CLOSE BUTTON ─────────────────────────────────────────── */
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--color-black);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+}
+
+.modal__close:hover {
+  opacity: 1;
+}
+
+.modal__close:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── MODAL HEADER ─────────────────────────────────────────── */
+.modal__header {
+  margin-bottom: 36px;
+}
+
+.modal__label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-black);
+  opacity: 0.4;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.modal__title {
+  font-family: var(--font-headline);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--color-black);
+  line-height: 1.1;
+}
+
+/* ── FORM SECTIONS ────────────────────────────────────────── */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.modal__section {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal__section-title {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-black);
+  opacity: 0.4;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+}
+
+/* ── FIELD ────────────────────────────────────────────────── */
+.modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__field-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--color-black);
+  text-transform: uppercase;
+}
+
+.modal__optional {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0.4;
+  text-transform: none;
+}
+
+/* ── INPUTS & TEXTAREA ────────────────────────────────────── */
+.modal__input,
+.modal__textarea,
+.modal__select {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 11px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.modal__input::placeholder,
+.modal__textarea::placeholder {
+  color: rgba(0,0,0,0.3);
+}
+
+.modal__input:focus,
+.modal__textarea:focus,
+.modal__select:focus {
+  border-color: var(--color-black);
+}
+
+.modal__input.is-invalid,
+.modal__textarea.is-invalid,
+.modal__select.is-invalid {
+  border-color: #c0392b;
+}
+
+.modal__textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+/* ── SELECT WRAPPER ───────────────────────────────────────── */
+.modal__select-wrap {
+  position: relative;
+}
+
+.modal__select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.modal__select {
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* ── TWO-COLUMN ROW ───────────────────────────────────────── */
+.modal__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── SIZE / TYPE RADIO PILLS ──────────────────────────────── */
+.modal__size-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.modal__size-option {
+  cursor: pointer;
+}
+
+/* Hide native radio */
+.modal__size-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.modal__size-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 22px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--color-black);
+  opacity: 0.5;
+  transition: opacity 0.2s ease, border-color 0.2s ease,
+              background-color 0.2s ease, color 0.2s ease;
+  user-select: none;
+}
+
+.modal__size-option:hover .modal__size-pill {
+  opacity: 0.85;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__size-option input[type="radio"]:checked + .modal__size-pill {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+  opacity: 1;
+}
+
+.modal__size-option input[type="radio"]:focus-visible + .modal__size-pill {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
+}
+
+/* ── FILE UPLOAD ──────────────────────────────────────────── */
+.modal__file-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: var(--color-white);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.modal__file-label:hover {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__file-icon {
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.modal__file-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-black);
+  opacity: 0.45;
+}
+
+.modal__file-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── CONFIRMATION CHECKBOX ────────────────────────────────── */
+.modal__confirm {
+  padding-top: 4px;
+}
+
+.modal__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* Hide native checkbox */
+.modal__checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Custom checkbox box */
+.modal__checkbox-custom {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.modal__checkbox-custom::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 9px;
+  border-right: 1.5px solid var(--color-white);
+  border-bottom: 1.5px solid var(--color-white);
+  transform: rotate(45deg) translate(-1px, -1px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.modal__checkbox:checked + .modal__checkbox-custom {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.modal__checkbox:checked + .modal__checkbox-custom::after {
+  opacity: 1;
+}
+
+.modal__checkbox.is-invalid + .modal__checkbox-custom {
+  border-color: #c0392b;
+}
+
+.modal__checkbox:focus-visible + .modal__checkbox-custom {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
+}
+
+.modal__checkbox-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-black);
+  opacity: 0.7;
+}
+
+/* ── SUBMIT BUTTON ────────────────────────────────────────── */
+.modal__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  margin-top: 8px;
+}
+
+.modal__submit:hover {
+  opacity: 0.82;
+  transform: scale(1.015);
+}
+
+.modal__submit:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 4px;
+}
+
+/* ── SUCCESS MODAL PANEL ──────────────────────────────────── */
+.modal__panel--success {
+  max-width: 460px;
+  padding: 56px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.success__icon {
+  margin-bottom: 28px;
+  opacity: 0.85;
+}
+
+.success__heading {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--color-black);
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.success__sub {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-black);
+  opacity: 0.55;
+  margin-bottom: 20px;
+  letter-spacing: 0.03em;
+}
+
+.success__body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-black);
+  opacity: 0.7;
+  max-width: 340px;
+  margin-bottom: 36px;
+}
+
+.success__close-btn {
+  width: 190px;
+  height: 42px;
+  font-size: 16px;
+  margin-top: 0;
+}
+
+/* ── BODY SCROLL LOCK ─────────────────────────────────────── */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ============================================================
+   MODAL RESPONSIVE
+   ============================================================ */
+@media (max-width: 767px) {
+
+  .modal__panel {
+    max-width: 100%;
+    max-height: 95vh;
+    padding: 40px 24px 32px;
+    /* On mobile slide up from bottom */
+    border-radius: 16px 16px 0 0;
+    align-self: flex-end;
+    transform: translateY(100%);
+  }
+
+  .modal.is-open .modal__panel {
+    transform: translateY(0);
+  }
+
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal__title {
+    font-size: 22px;
+  }
+
+  .modal__row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal__panel--success {
+    max-width: 100%;
+    padding: 40px 28px 36px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .success__close-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+
+  .modal__panel {
+    padding: 36px 20px 28px;
+  }
+
+  .modal__size-group {
+    gap: 8px;
+  }
+
+  .modal__size-pill {
+    padding: 7px 16px;
+    font-size: 12px;
+  }
+}
+
+/* ============================================================
+   ABOUT SECTION
+   Figma desktop reference: 1440 × 1024
+   Jumbotron: 1440 × 528px, top 95px (below 78px navbar + 17px gap)
+   ============================================================ */
+
+/* ── SECTION WRAPPER ──────────────────────────────────────── */
+.about {
+  width: 100%;
+  background-color: var(--color-bg);
+  /* Scroll-margin so sticky navbar doesn't hide the section top */
+  scroll-margin-top: 78px;
+}
+
+/* ── JUMBOTRON ────────────────────────────────────────────── */
+/* Figma: 1440 × 528px, positioned top: 95px on the canvas.
+   We use margin-top so the section starts immediately after
+   the catalog, and the navbar offset is handled by scroll-margin. */
+.about__jumbotron {
+  position: relative;
+  width: 100%;
+  height: 528px;
+  background-image: url('../assets/images/Background-Studio.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* Smooth appearance on image load */
+  background-color: #1a1a1a; /* fallback while image loads */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Darkening overlay — makes white text legible over any photo */
+.about__jumbotron-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Text block — centred over the image */
+.about__jumbotron-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 0 24px;
+}
+
+/* "ABOUT" eyebrow label */
+.about__jumbotron-label {
+  font-family: var(--font-headline);
+  font-size: 120px;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+  /* Slight bleed effect — visually bold without full opacity */
+  opacity: 0.95;
+}
+
+/* "ENCRE NOCTURNE — TATTOO STUDIO" */
+.about__jumbotron-title {
+  font-family: var(--font-headline);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-white);
+  text-align: center;
+}
+
+/* The second line "TATTOO STUDIO" shares the same h2 */
+.about__jumbotron-subtitle {
+  display: inline-block;
+}
+
+/* Tagline below the title */
+.about__jumbotron-tagline {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  opacity: 0.88;
+  max-width: 560px;
+  text-align: center;
+}
+
+/* ── BODY (description + location + CTA) ─────────────────── */
+.about__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 72px 24px 80px;
+  gap: 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ── DESCRIPTION ──────────────────────────────────────────── */
+.about__desc {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: var(--color-black);
+  text-align: center;
+  max-width: 756px;
+}
+
+/* ── LOCATION ─────────────────────────────────────────────── */
+.about__location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.about__location-label {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-black);
+  opacity: 0.55;
+  text-align: center;
+}
+
+.about__location-city {
+  font-family: var(--font-body);
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--color-black);
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ── CTA BAR ──────────────────────────────────────────────── */
+/* Figma: single black pill, 616 × 38px, border-radius 50px.
+   Three text items separated by thin white vertical lines. */
+.about__cta-bar {
+  display: inline-flex;
+  align-items: center;
+  width: 616px;
+  height: 38px;
+  background-color: var(--color-black);
+  border-radius: 50px;
+  overflow: hidden; /* keep children inside the pill */
+  flex-shrink: 0;
+}
+
+/* Each CTA action — equal thirds of the bar */
+.about__cta-item {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  white-space: nowrap;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  /* Subtle hover: slight brightness lift */
+  transition: opacity 0.22s ease, background-color 0.22s ease;
+}
+
+.about__cta-item:hover {
+  opacity: 0.75;
+}
+
+.about__cta-item:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: -3px;
+  border-radius: 50px;
+}
+
+/* Vertical divider between items */
+.about__cta-divider {
+  display: block;
+  width: 1px;
+  height: 18px;
+  background-color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* ── ABOUT TOAST NOTIFICATION ─────────────────────────────── */
+/* Lightweight feedback for CONTACT ME and LEAVE A REVIEW CTAs */
+.about__toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  z-index: 600;
+
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  padding: 12px 28px;
+  border-radius: 50px;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.about__toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   ABOUT RESPONSIVE
+   ============================================================ */
+
+/* ── Tablet (768px – 1199px) ──────────────────────────────── */
+@media (max-width: 1199px) {
+
+  .about__jumbotron {
+    height: 420px;
+  }
+
+  .about__jumbotron-label {
+    font-size: clamp(64px, 9vw, 120px);
+  }
+
+  .about__jumbotron-title {
+    font-size: clamp(20px, 2.5vw, 30px);
+  }
+
+  .about__jumbotron-tagline {
+    font-size: 15px;
+  }
+
+  .about__body {
+    padding: 56px 40px 64px;
+    gap: 40px;
+  }
+
+  .about__desc {
+    font-size: 18px;
+    max-width: 640px;
+  }
+
+  .about__location-city {
+    font-size: 30px;
+  }
+
+  .about__cta-bar {
+    width: 100%;
+    max-width: 616px;
+  }
+
+  .about__cta-item {
+    font-size: 20px;
+  }
+}
+
+/* ── Mobile (< 768px) ─────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  .about__jumbotron {
+    height: 340px;
+  }
+
+  .about__jumbotron-content {
+    gap: 8px;
+    padding: 0 20px;
+  }
+
+  .about__jumbotron-label {
+    font-size: clamp(48px, 13vw, 80px);
+  }
+
+  .about__jumbotron-title {
+    font-size: clamp(16px, 4.5vw, 24px);
+    line-height: 1.3;
+  }
+
+  .about__jumbotron-tagline {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  .about__body {
+    padding: 40px 20px 56px;
+    gap: 32px;
+  }
+
+  .about__desc {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .about__location-label {
+    font-size: 16px;
+  }
+
+  .about__location-city {
+    font-size: 26px;
+  }
+
+  /* CTA bar: stack vertically on mobile */
+  .about__cta-bar {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    padding: 6px 0;
+    gap: 0;
+  }
+
+  .about__cta-item {
+    width: 100%;
+    flex: none;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  /* Horizontal divider on mobile */
+  .about__cta-divider {
+    width: 40%;
+    height: 1px;
+  }
+
+  .about__toast {
+    font-size: 14px;
+    padding: 10px 22px;
+    bottom: 24px;
+    white-space: normal;
+    text-align: center;
+    max-width: calc(100vw - 48px);
+  }
+}
+
+/* ── Small mobile (< 480px) ───────────────────────────────── */
+@media (max-width: 479px) {
+
+  .about__jumbotron {
+    height: 280px;
+  }
+
+  .about__jumbotron-label {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
+  .about__jumbotron-title {
+    font-size: clamp(14px, 4vw, 20px);
+  }
+
+  .about__jumbotron-tagline {
+    font-size: 12px;
+  }
+
+  .about__body {
+    padding: 32px 16px 48px;
+    gap: 28px;
+  }
+
+  .about__desc {
+    font-size: 15px;
+  }
+
+  .about__location-city {
+    font-size: 22px;
+  }
+
+  .about__cta-item {
+    font-size: 16px;
+    height: 40px;
+  }
+}
